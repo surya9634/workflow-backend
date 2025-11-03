@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": "1761956988409juzem2mii",
+      "email": "ssrss125@gmail.com",
+      "password": "$2b$10$XDMWLwm2EPyRnHkQKDn9DuZ6ltwyzA.pay6fKm1PUALRdn8ZVmZd2",
+      "role": "user",
+      "onboardingCompleted": true,
+      "createdAt": "2025-11-01T00:29:48.409Z"
+    }
+  ],
+  "onboardings": [
+    {
+      "id": "1761957561554k8saxov9s",
+      "userId": "1761956988409juzem2mii",
+      "businessName": "ff",
+      "userName": "ff",
+      "businessDescription": "dwec dsw",
+      "idealCustomer": "ff",
+      "leadSources": [
+        "India"
+      ],
+      "leadSourcesOther": "",
+      "dealSize": "Under ₹5,000",
+      "communicationPlatforms": [
+        "Facebook Messenger"
+      ],
+      "communicationOther": "",
+      "leadHandling": "Let your AI agent handle it",
+      "salesGoal": "20000",
+      "customerQuestions": [
+        "",
+        "",
+        ""
+      ],
+      "websiteLinks": "",
+      "urgency": "ASAP",
+      "completedAt": "2025-11-01T00:39:21.554Z"
+    }
+  ],
+  "campaigns": [],
+  "analytics": [],
+  "conversations": [],
+  "fbintegrations": []
+}
