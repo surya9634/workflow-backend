@@ -1298,9 +1298,10 @@ app.get('/auth/facebook', (req, res) => {
 // Facebook OAuth callback
 app.get('/auth/facebook/callback', async (req, res) => {
   const { code } = req.query;
+  const FRONTEND_URL = process.env.FRONTEND_URL || 'https://workflow-frontend-iota.vercel.app';
   
   if (!code) {
-    return res.redirect('http://localhost:5173/dashboard/integration?error=no_code');
+    return res.redirect(`${FRONTEND_URL}/dashboard/integration?error=no_code`);
   }
 
   try {
@@ -1330,13 +1331,13 @@ app.get('/auth/facebook/callback', async (req, res) => {
       console.log('✅ Facebook Page connected:', page.name);
       
       // Redirect back to dashboard with success
-      res.redirect(`http://localhost:5173/dashboard/integration?fb_connected=true&page_name=${encodeURIComponent(page.name)}&page_id=${page.id}`);
+      res.redirect(`${FRONTEND_URL}/dashboard/integration?fb_connected=true&page_name=${encodeURIComponent(page.name)}&page_id=${page.id}`);
     } else {
-      res.redirect('http://localhost:5173/dashboard/integration?error=no_pages');
+      res.redirect(`${FRONTEND_URL}/dashboard/integration?error=no_pages`);
     }
   } catch (error) {
     console.error('Facebook OAuth error:', error);
-    res.redirect('http://localhost:5173/dashboard/integration?error=oauth_failed');
+    res.redirect(`${FRONTEND_URL}/dashboard/integration?error=oauth_failed`);
   }
 });
 
