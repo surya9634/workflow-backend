@@ -16,15 +16,11 @@ const groq = new Groq({
 
 const app = express();
 
-// Trust proxy - important for Render/Heroku to detect HTTPS correctly
-app.set('trust proxy', 1);
-
 // Middleware
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://workflow-frontend-iota.vercel.app',
   process.env.FRONTEND_URL || 'https://workflow-frontend-iota.vercel.app'
 ];
 
@@ -342,6 +338,15 @@ const validateAuthInput = (req, res, next) => {
   }
 
   next();
+};
+
+// Helper function to get correct protocol (force HTTPS in production)
+const getProtocol = (req) => {
+  // If in production (Render), always use HTTPS
+  if (process.env.NODE_ENV === 'production' || req.get('host').includes('onrender.com')) {
+    return 'https';
+  }
+  return req.protocol;
 };
 
 // Test route
@@ -1284,7 +1289,7 @@ async function callSendAPI(senderPsid, response) {
 // Initiate Facebook OAuth
 app.get('/auth/facebook', (req, res) => {
   const FB_APP_ID = process.env.FB_APP_ID || '1256408305896903';
-  const REDIRECT_URI = `${req.protocol}://${req.get('host')}/auth/facebook/callback`;
+  const REDIRECT_URI = `${getProtocol(req)}://${req.get('host')}/auth/facebook/callback`;
   
   const permissions = [
     'pages_show_list',
@@ -1310,7 +1315,7 @@ app.get('/auth/facebook/callback', async (req, res) => {
   try {
     const FB_APP_ID = process.env.FB_APP_ID || '1256408305896903';
     const FB_APP_SECRET = process.env.FB_APP_SECRET || 'fc7fbca3fbecd5bc6b06331bc4da17c9';
-    const REDIRECT_URI = `${req.protocol}://${req.get('host')}/auth/facebook/callback`;
+    const REDIRECT_URI = `${getProtocol(req)}://${req.get('host')}/auth/facebook/callback`;
 
     // Exchange code for access token
     const tokenUrl = `https://graph.facebook.com/v18.0/oauth/access_token?client_id=${FB_APP_ID}&client_secret=${FB_APP_SECRET}&code=${code}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
@@ -1350,7 +1355,7 @@ app.get('/api/facebook/app', (req, res) => {
   res.json({
     appId: FB_APP_ID,
     appName: 'WorkFlow Sales Automation',
-    callback: `${req.protocol}://${req.get('host')}/auth/facebook/callback`
+    callback: `${getProtocol(req)}://${req.get('host')}/auth/facebook/callback`
   });
 });
 
