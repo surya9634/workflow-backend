@@ -345,6 +345,15 @@ app.get('/', (req, res) => {
   res.json({ message: 'Auth server is running!' });
 });
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok',
+    message: 'Backend is healthy',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // AUTH ROUTES
 
 // Sign Up Route
