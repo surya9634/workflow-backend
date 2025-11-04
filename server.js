@@ -16,6 +16,9 @@ const groq = new Groq({
 
 const app = express();
 
+// Trust proxy - important for Render/Heroku to detect HTTPS correctly
+app.set('trust proxy', 1);
+
 // Middleware
 const allowedOrigins = [
   'http://localhost:3000',
